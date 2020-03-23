@@ -1,35 +1,33 @@
 const puppeteer = require("puppeteer");
 var siteUrl = "https://www.fantasynamegenerators.com/anime-attack-names.php";
 const moveModel = require("./../model/moveModel");
-const { fillArray, checkAction } = require("../util/utilFunctions");
+const callsAndAction = require("../util/utilFunctions");
+const filterMoves = require("./../util/charUpdate/moves/filterMoves");
 
-// USEFUL VARIABLES
-const filterPower = "strong";
-const create = "file";
+//// USEFUL VARIABLES
 const name = "moves";
-var movesLength = 69;
+const filterPower = "strong";
+//"strong" : none of the mooves will have a word in common anything else will not apply this filter
+const create = "file";
+//"file" : creates a file, "collection" : creates a mongoose collection
+const movesLength = 69;
+//length of moves array /!\ IF THE FILTERPOWER IS "strong" DO NOT CHOOSE (> 70)
+const numberOfWords = 3;
+//maximum number of words for one move
 
-const checkSpaces = elem => {
-  return elem.split(" ").length < 4;
+const whileLoop = async (name, val, asyncClbk, clbk) => {
+  let res = [];
+  while (res.length < val) {
+    res = [...clbk(await asyncClbk(), res)];
+    // res = await fillArray(name, val, asyncClbk, clbk, allMoves);
+    console.log(`${res.length} ${name}`);
+  }
+  return res;
 };
 
-const filteredArray = (array1, array2) => {
-  let wordsArray = array1.reduce(
-    (acc, val) => (acc = [...acc, ...val.split(" ")]),
-    []
-  );
-  let filteredArray =
-    (filterPower && filterPower === "strong")
-      ? array2.filter(
-          elem2 => !array1.find(elem1 => elem2 === elem1) && checkSpaces(elem2)
-        )
-      : array2.filter(elem2 => {
-          return (
-            !wordsArray.find(elem1 => elem2.includes(elem1)) &&
-            checkSpaces(elem2)
-          );
-        });
-  return [...array1, ...filteredArray].sort((a, b) => (a < b ? -1 : 1));
+const loopOption = {
+  loop: whileLoop,
+  value: movesLength
 };
 
 const getMoves = () =>
@@ -40,21 +38,22 @@ const getMoves = () =>
     let data = await page.evaluate(() => {
       let moves = document.querySelector('div[id="placeholder"]').innerText;
       moves = moves.split("\n");
-      moves.splice(moves.length - 1);
+      moves.splice(moves.length - 7);
       return moves;
     });
     await browser.close();
+    console.log(data);
     return data;
   })();
 
-const callsAndAction = async action => {
-  let allMoves = [];
+callsAndAction(
+  create,
+  name,
+  moveModel,
+  getMoves,
+  filterMoves,
+  null,
+  loopOption
+);
 
-  while (allMoves.length < movesLength) {
-    allMoves = await fillArray(getMoves, filteredArray, allMoves);
-    console.log(`${allMoves.length} ${name}`);
-  }
-  checkAction(action, allMoves, name, moveModel);
-};
-
-callsAndAction(create);
+module.exports = { filterPower, numberOfWords };

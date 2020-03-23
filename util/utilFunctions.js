@@ -20,7 +20,7 @@ function sendDataOnce(data, model, win) {
     .catch(err => console.log(err));
 }
 
-const pushOnceIntoDatabase = (data, model) => {
+const pushOnceIntoDatabase = (name, data, model) => {
   mongoose
     .connect(`${process.env.MONGO_URI}${process.env.MONGO_COLLECTION}`, {
       useNewUrlParser: true,
@@ -31,7 +31,7 @@ const pushOnceIntoDatabase = (data, model) => {
       sendDataOnce(
         data,
         model,
-        `${data.length} heroes inserted at ${x.connections[0].name} > ${process.env.MONGO_COLLECTION}`
+        `${data.length} ${name} inserted at ${process.env.MONGO_COLLECTION}`
       );
     })
     .catch(err => {
@@ -39,15 +39,35 @@ const pushOnceIntoDatabase = (data, model) => {
     });
 };
 
-// VARIABLES TO EXPORT
-const fillArray = async (asyncClbk, clbk, arr, arg) => {
-  const res = arg ? await asyncClbk(arg) : await asyncClbk();
-  return [...clbk(arr, res)];
+const fillArray = async (name, asyncClbk, clbk, optionalLoop) => {
+  let res = [];
+  if (optionalLoop) {
+    res = await optionalLoop.loop(name, optionalLoop.value, asyncClbk, clbk);
+  } else {
+    res = [...clbk(await asyncClbk(), res)];
+  }
+  return res;
 };
 
-const checkAction = (action, arr, name, model) => {
+const checkAction = (name, action, arr, model) => {
   if (action === "file") createFile(arr, name + ".json");
-  if (action === "collection") pushOnceIntoDatabase(arr, model);
+  if (action === "collection") pushOnceIntoDatabase(name, arr, model);
 };
 
-module.exports = { fillArray, checkAction };
+const callsAndAction = async (
+  action,
+  name,
+  model,
+  getData,
+  filterData,
+  transformData,
+  optionnalLoop
+) => {
+  let array = [];
+
+  array = await fillArray(name, getData, filterData, optionnalLoop);
+  if (transformData) array = transformData(array);
+  checkAction(name, action, array, model);
+};
+
+module.exports = callsAndAction;

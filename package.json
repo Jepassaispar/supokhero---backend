@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon ./bin/www -e .js",
     "heroes": "node ./config/getHeroes.js",
-    "moves": "node ./config/getMoves.js"
+    "moves": "node ./config/getMoves.js",
+    "pokemons": "node ./config/getPokemons.js"
   },
   "author": "",
   "license": "ISC",

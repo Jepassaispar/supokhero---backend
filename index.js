@@ -15,9 +15,9 @@ app.use("*", cors());
 
 const index = require("./routes/index");
 app.use("/", index);
-const pokemon = require("./routes/pokemon");
-app.use("/pokemon", pokemon);
-const hero = require("./routes/hero");
-app.use("/heroes", hero);
+const pokemons = require("./routes/pokemons");
+app.use("/pokemons", pokemons);
+const heroes = require("./routes/heroes");
+app.use("/heroes", heroes);
 
 module.exports = app;
