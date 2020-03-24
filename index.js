@@ -3,7 +3,6 @@ require("./config/mongoose");
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -16,8 +15,8 @@ app.use("*", cors());
 const index = require("./routes/index");
 app.use("/", index);
 const pokemons = require("./routes/pokemons");
-app.use("/pokemons", pokemons);
+app.use("/pokemon", pokemons);
 const heroes = require("./routes/heroes");
-app.use("/heroes", heroes);
+app.use("/hero", heroes);
 
 module.exports = app;
