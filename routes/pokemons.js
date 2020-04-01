@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pokemonModel = require("./../model/pokemonModel");
+const pokemonModel = require("../model/pokemonModel");
 
 router.get("/", (req, res, next) => {
   pokemonModel
