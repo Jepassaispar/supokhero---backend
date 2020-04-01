@@ -1,6 +1,5 @@
 const resizeArray = require("../../array/resizeArray");
 const shuffleArray = require("../../array/shuffleArray");
-const capitalize = require("./../")
 
 const transformPokemon = pokemons => {
   return pokemons.map(pokemon => {
@@ -26,6 +25,7 @@ const transformPokemon = pokemons => {
     });
     return {
       name: pokemon.name,
+      category: "Pokemon",
       hp,
       types,
       stats,

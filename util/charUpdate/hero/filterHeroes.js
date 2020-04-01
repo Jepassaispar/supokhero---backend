@@ -8,7 +8,7 @@ const checkStats = elem => {
 
 const filterHeroes = (array1, array2) => {
   let filteredArray = array1.filter(
-    elem => !array2.find(({ name }) => elem.name === name) && checkStats(elem)
+    (elem => !array2.find(({ name }) => elem.name === name) && checkStats(elem))
   );
   return [...array2, ...filteredArray].sort((a, b) =>
     a.name < b.name ? -1 : 1

@@ -1,10 +1,10 @@
 // TO CREATE A JSON FILE CHANGE ACTION TO "create file"
 // TO INSERT DATA IN MONGODB CHANGE ACTION TO "create collection"
-const pokemonModel = require("../model/pokemonModel");
-const callsAndAction = require("../util/utilFunctions");
-const transformPokemons = require("../util/charUpdate/pokemon/transformPokemons");
-const filterPokemons = require("../util/charUpdate/pokemon/filterPokemons");
-const APIPoke = require("../api/APIPoke");
+const pokemonModel = require("./../model/pokemonModel");
+const callsAndAction = require("./../util/utilFunctions");
+const transformPokemons = require("./../util/charUpdate/pokemon/transformPokemons");
+const filterPokemons = require("./../util/charUpdate/pokemon/filterPokemons");
+const APIPoke = require("./../api/APIPoke");
 const pokeURL = "http://pokeapi.co/api/v2";
 const pokeAPI = new APIPoke(pokeURL);
 

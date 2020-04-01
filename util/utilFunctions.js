@@ -16,7 +16,10 @@ const createFile = (data, fileName) => {
 function sendDataOnce(data, model, win) {
   model
     .insertMany(data)
-    .then(console.log(win))
+    .then(() => {
+      console.log(win);
+      mongoose.connection.close();
+    })
     .catch(err => console.log(err));
 }
 
@@ -27,7 +30,7 @@ const pushOnceIntoDatabase = (name, data, model) => {
       useCreateIndex: true,
       useUnifiedTopology: true
     })
-    .then(x => {
+    .then(() => {
       sendDataOnce(
         data,
         model,
