@@ -7,6 +7,7 @@ const transformHeroes = arr => {
     const moves = resizeArray(shuffleArray([...allMoves]), 15);
     let newObject = {
       ...a,
+      category: "Hero",
       hp: a.powerstats.intelligence,
       types:
         a.appearance.race !== "null"

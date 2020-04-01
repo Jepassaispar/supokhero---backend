@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const heroSchema = new Schema({
   id: String,
   name: String,
+  category: String,
   hp: String,
   height: String,
   weight: String,

@@ -6,12 +6,15 @@ const callsAndAction = require("./../util/utilFunctions");
 const transformHeroes = require("./../util/charUpdate/hero/transformHeroes");
 const filterHeroes = require("./../util/charUpdate/hero/filterHeroes");
 
+// VARIABLE TO QUERY ALL HERORES
+const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+// const alphabetTest = "ab".split("");
+
+
 // USEFUL VARIABLES
 const name = "heroes";
 const create = "collection";
-const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
-// const alphabetTest = "ab".split("");
 
 const getQueryes = async char => {
   try {
