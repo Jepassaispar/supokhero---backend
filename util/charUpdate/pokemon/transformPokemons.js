@@ -23,6 +23,7 @@ const transformPokemon = (pokemons) => {
 		});
 		return {
 			name: capitalize(pokemon.name),
+			category: 'Pokemon',
 			hp,
 			types,
 			stats,

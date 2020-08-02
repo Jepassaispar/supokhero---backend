@@ -1,5 +1,4 @@
 require("dotenv").config();
-require("./config/mongoose");
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
@@ -12,11 +11,9 @@ app.use(express.json());
 
 app.use("*", cors());
 
-const index = require("./routes/index");
-app.use("/", index);
-const pokemons = require("./routes/pokemons");
-app.use("/pokemon", pokemons);
-const heroes = require("./routes/heroes");
-app.use("/hero", heroes);
+const index = require("./routes/validateCode");
+app.use("/code", index);
+const infos = require("./routes/infos");
+app.use("/infos", infos);
 
 module.exports = app;
