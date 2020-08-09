@@ -9,13 +9,13 @@ const codes = [
   { code: "mauvoisin", type: ["cérémonie&cocktail"] },
 ];
 
-router.post("/:code", (req, res, next) => {
+router.post("/:code", (req, res) => {
   const code = req.params.code;
   const event = codes.find((c) => code.toLowerCase() === c.code.toLowerCase());
   event ? res.json(event.type) : res.status(500).send("no matching code");
 });
 
-router.post("/:code", (req, res, next) => {
+router.post("/:code", (req, res) => {
   const code = req.params.code;
   const event = codes.find((c) => code.toLowerCase() === c.code.toLowerCase());
   event ? res.json(event.type) : res.status(500);

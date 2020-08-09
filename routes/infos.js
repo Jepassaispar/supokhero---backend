@@ -1,7 +1,5 @@
 const express = require("express");
 const router = new express.Router();
-const csv = require("csv-parser");
-const fs = require("fs");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const csvWriter = createCsvWriter({
   path: "allInfos.csv",
